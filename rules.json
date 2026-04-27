@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "priority": 1,
+      "action": { "type": "block" },
+      "condition": {
+        "urlFilter": "||chatgpt.com/backend-anon/f/conversation/prepare",
+        "requestMethods": ["post"],
+        "resourceTypes": ["xmlhttprequest", "sub_frame", "main_frame", "other"]
+      }
+    },
+    {
+      "id": 2,
+      "priority": 1,
+      "action": { "type": "block" },
+      "condition": {
+        "urlFilter": "||chatgpt.com/backend-api/f/conversation/prepare",
+        "requestMethods": ["post"],
+        "resourceTypes": ["xmlhttprequest", "sub_frame", "main_frame", "other"]
+      }
+    },
+    {
+      "id": 3,
+      "priority": 1,
+      "action": { "type": "block" },
+      "condition": {
+        "urlFilter": "||chatgpt.com/backend-api/conversation/experimental/generate_autocompletions",
+        "requestMethods": ["post"],
+        "resourceTypes": ["xmlhttprequest", "sub_frame", "main_frame", "other"]
+      }
+    }
+  ]

@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "ChatGPT Privacy Guard",
+    "version": "1.0.0",
+    "description": "Protects your privacy by blocking ChatGPT from silently sending what you type to its servers before you hit Enter. Stops keystroke-level telemetry, autocompletion, and conversation 'prepare' requests.",
+    "permissions": ["declarativeNetRequest"],
+    "host_permissions": ["https://chatgpt.com/*"],
+    "declarative_net_request": {
+      "rule_resources": [
+        {
+          "id": "ruleset_1",
+          "enabled": true,
+          "path": "rules.json"
+        }
+      ]
+    }
+  }
