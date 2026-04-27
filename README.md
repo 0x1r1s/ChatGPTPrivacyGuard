@@ -36,3 +36,8 @@ Once installed:
 ### How it works
 
 The extension ships with a static `rules.json` containing three block rules — one per endpoint — scoped to `https://chatgpt.com/*`. Chrome enforces these rules natively; the extension itself runs no JavaScript at runtime.
+
+
+## Why I built this
+
+I built this extension after a small but unsettling realization. One day I pasted some sensitive information into the ChatGPT prompt box, intending to edit and redact it before pressing Enter. I carefully cleaned it up, hit send — and only later noticed, while inspecting the network tab, that the original unedited text had already been transmitted to the server the moment I pasted it, via background "prepare" and autocompletion requests. The edits I made never mattered: the raw paste was gone the instant it touched the input. That moment made me realize how much of what we type but never send is leaving our browsers anyway, and I wrote ChatGPT Privacy Guard so that nothing leaves until I explicitly choose to send it.
