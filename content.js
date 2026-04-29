@@ -11,6 +11,62 @@ const STORAGE_KEYS = {
 
 const MAX_EVENTS = 25;
 
+function isValidCreditCardNumber(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+
+  if (digits.length < 13 || digits.length > 19) {
+    return false;
+  }
+
+  let sum = 0;
+  let shouldDouble = false;
+
+  for (let index = digits.length - 1; index >= 0; index -= 1) {
+    let digit = Number(digits[index]);
+
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+
+  return sum % 10 === 0;
+}
+
+function isReasonableCardExpiry(value) {
+  const compact = String(value || "").replace(/\s/g, "");
+  const parts = compact.includes("/") ? compact.split("/") : [
+    compact.slice(0, 2),
+    compact.slice(2)
+  ];
+  const month = Number(parts[0]);
+  let year = Number(parts[1]);
+
+  if (!Number.isInteger(month) || month < 1 || month > 12 || !Number.isInteger(year)) {
+    return false;
+  }
+
+  if (year < 100) {
+    year += 2000;
+  }
+
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentYear = now.getFullYear();
+  const maxYear = currentYear + 20;
+
+  if (year < currentYear || year > maxYear) {
+    return false;
+  }
+
+  return year !== currentYear || month >= currentMonth;
+}
+
 const PATTERNS = [
   {
     type: "private_key",
@@ -92,21 +148,41 @@ const PATTERNS = [
   },
   {
     type: "personal_info",
-    label: "Personal information",
+    label: "Personal names",
     replacement: "$1$2******$2",
-    regex: /(\b["']?(?:first[_-]?name|last[_-]?name|full[_-]?name|date[_-]?of[_-]?birth|dob|national[_-]?id|passport(?:[_-]?number)?|street|city|postal[_-]?code|zip(?:[_-]?code)?|country)["']?\s*:\s*)(["'])(?!\*{6}\2)[^"'\r\n]{2,}\2/gi
+    regex: /(\b["']?(?:first[_-]?name|last[_-]?name|full[_-]?name)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-ZÀ-ÖØ-öø-ÿ][A-ZÀ-ÖØ-öø-ÿ'. -]{1,80}\2/gi
+  },
+  {
+    type: "personal_info",
+    label: "Dates of birth",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:date[_-]?of[_-]?birth|dob)["']?\s*:\s*)(["'])(?!\*{6}\2)(?:\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\2/gi
+  },
+  {
+    type: "personal_info",
+    label: "Government identifiers",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:national[_-]?id|passport(?:[_-]?number)?)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Z0-9][A-Z0-9 -]{5,40}\2/gi
+  },
+  {
+    type: "personal_info",
+    label: "Address fields",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:street|city|postal[_-]?code|zip(?:[_-]?code)?|country)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Z0-9À-ÖØ-öø-ÿ][A-Z0-9À-ÖØ-öø-ÿ'. -]{2,100}\2/gi
   },
   {
     type: "credit_card_number",
     label: "Credit card numbers",
-    replacement: "**** **** **** ****",
-    regex: /\b(?:4\d{3}(?:[\s-]?\d{4}){2}(?:[\s-]?\d{3})?|(?:5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|6(?:011|5\d{2}))(?:[\s-]?\d{4}){3}|3[47]\d{2}[\s-]?\d{6}[\s-]?\d{5})\b/g
+    replacement: (match) => isValidCreditCardNumber(match) ? "**** **** **** ****" : match,
+    regex: /\b(?:4\d{3}(?:[\s-]?\d{4}){3}|(?:5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|6(?:011|5\d{2}))(?:[\s-]?\d{4}){3}|3[47]\d{2}[\s-]?\d{6}[\s-]?\d{5})\b/g
   },
   {
     type: "credit_card_expiry",
     label: "Credit card expiry dates",
-    replacement: "$1$2******$2",
-    regex: /(\b["']?(?:exp(?:iry|iration)?|card[_-]?exp(?:iry|iration)?|cc[_-]?exp(?:iry|iration)?)["']?\s*:\s*)(["'])(?!\*{6}\2)(?:0[1-9]|1[0-2])(?:\s*\/\s*)?(?:\d{2}|\d{4})\2/gi
+    replacement: (match, prefix, quote, expiry) => {
+      return isReasonableCardExpiry(expiry) ? `${prefix}${quote}******${quote}` : match;
+    },
+    regex: /(\b["']?(?:exp(?:iry|iration)?|card[_-]?exp(?:iry|iration)?|cc[_-]?exp(?:iry|iration)?)["']?\s*:\s*)(["'])(?!\*{6}\2)((?:0[1-9]|1[0-2])(?:\s*\/\s*)?(?:\d{2}|\d{4}))\2/gi
   },
   {
     type: "credit_card_cvv",
