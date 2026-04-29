@@ -59,7 +59,8 @@ The sanitizer detects common sensitive values, including:
 - API keys and tokens for OpenAI, GitHub, AWS, Stripe, Slack, bearer auth, and JWTs
 - Private keys
 - Database, Redis, cache, DSN, and webhook-style URLs containing embedded credentials
-- Email addresses, phone numbers, and street addresses
+- Email addresses, phone numbers, names, dates of birth, national IDs, passport numbers, and street addresses
+- Credit card numbers, expiry dates, and security codes
 
 ## User Controls
 

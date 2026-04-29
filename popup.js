@@ -21,6 +21,10 @@ const LABELS = {
   webhook_or_dsn: "Webhook and DSN values",
   env_secret: "Environment secrets",
   assigned_secret: "Assigned secrets",
+  personal_info: "Personal information",
+  credit_card_number: "Credit card numbers",
+  credit_card_expiry: "Credit card expiry dates",
+  credit_card_cvv: "Credit card security codes",
   email: "Email addresses",
   phone: "Phone numbers",
   address: "Street addresses"

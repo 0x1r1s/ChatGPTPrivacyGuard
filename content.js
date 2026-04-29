@@ -91,6 +91,30 @@ const PATTERNS = [
     regex: /\b([A-Za-z0-9_-]*(?:password|passwd|pwd|api[_-]?key|secret|token|access[_-]?token|refresh[_-]?token|client[_-]?secret)[A-Za-z0-9_-]*\s*[:=]\s*)(["']?)(?!\*{6}\2)[^\s"'`,;]{4,}\2/gi
   },
   {
+    type: "personal_info",
+    label: "Personal information",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:first[_-]?name|last[_-]?name|full[_-]?name|date[_-]?of[_-]?birth|dob|national[_-]?id|passport(?:[_-]?number)?|street|city|postal[_-]?code|zip(?:[_-]?code)?|country)["']?\s*:\s*)(["'])(?!\*{6}\2)[^"'\r\n]{2,}\2/gi
+  },
+  {
+    type: "credit_card_number",
+    label: "Credit card numbers",
+    replacement: "4242 4242 4242 4242",
+    regex: /\b(?:4\d{3}|5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|3[47]\d{2}|6(?:011|5\d{2}))(?:[\s-]?\d{4}){2,3}\b/g
+  },
+  {
+    type: "credit_card_expiry",
+    label: "Credit card expiry dates",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:exp(?:iry|iration)?|card[_-]?exp(?:iry|iration)?|cc[_-]?exp(?:iry|iration)?)["']?\s*:\s*)(["'])(?!\*{6}\2)(?:0[1-9]|1[0-2])\s*\/\s*(?:\d{2}|\d{4})\2/gi
+  },
+  {
+    type: "credit_card_cvv",
+    label: "Credit card security codes",
+    replacement: "$1$2******$2",
+    regex: /(\b["']?(?:cvv|cvc|cid|card[_-]?security[_-]?code|card[_-]?verification[_-]?code)["']?\s*:\s*)(["'])(?!\*{6}\2)\d{3,4}\2/gi
+  },
+  {
     type: "email",
     label: "Email addresses",
     replacement: "user@example.com",
@@ -100,13 +124,13 @@ const PATTERNS = [
     type: "phone",
     label: "Phone numbers",
     replacement: "555-0100",
-    regex: /(?<!\w)(?:\+?\d{1,3}[\s.-]?)?(?:\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}(?!\w)/g
+    regex: /(?<!\w)(?=(?:[^\d]*\d){10,15}(?!\d))(?:\+?\d{1,3}[\s.-]?)?(?:\(?\d{1,4}\)?[\s.-]?){2,5}\d{2,4}(?!\w)/g
   },
   {
     type: "address",
     label: "Street addresses",
     replacement: "123 Example Street",
-    regex: /\b\d{1,6}\s+(?:[A-Z][a-zA-Z0-9'.-]*\s+){1,6}(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?|Drive|Dr\.?|Lane|Ln\.?|Court|Ct\.?|Way|Place|Pl\.?|Terrace|Ter\.?)\b(?:\s*(?:,|#|Apt\.?|Suite|Ste\.?)\s*[A-Za-z0-9 -]+)?/g
+    regex: /\b\d{1,6}\s+(?:(?:(?:Rue|Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?|Drive|Dr\.?|Lane|Ln\.?|Court|Ct\.?|Way|Place|Pl\.?|Terrace|Ter\.?|Calle|Via|Strasse|Straße)\s+)?(?:[A-Z][a-zA-ZÀ-ÖØ-öø-ÿ0-9'.-]*\s+){1,6}(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?|Drive|Dr\.?|Lane|Ln\.?|Court|Ct\.?|Way|Place|Pl\.?|Terrace|Ter\.?|Rue|Calle|Via|Strasse|Straße)?)(?:\s*(?:,|#|Apt\.?|Suite|Ste\.?)\s*[A-Za-z0-9 -]+)?\b/gi
   }
 ];
 
