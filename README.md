@@ -87,23 +87,6 @@ The extension uses:
 
 All replacement stats are stored locally with `chrome.storage.local`.
 
-## Installation
-
-1. Open `chrome://extensions` or `edge://extensions`.
-2. Enable **Developer mode**.
-3. Choose **Load unpacked**.
-4. Select this repository folder.
-5. Refresh any already-open AI chat tabs after reloading the extension.
-
-## Development Notes
-
-Chrome can generate `_metadata/` and `_metadata/generated_indexed_rulesets/` when loading or packaging the extension. Those files are generated browser artifacts and should not be committed.
-
-This repository ignores `_metadata/` via `.gitignore`. If metadata was already tracked, remove it from git with:
-
-```bash
-git rm --cached -r _metadata
-```
 
 
 ## Why I built this
