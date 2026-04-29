@@ -1,10 +1,35 @@
 {
     "manifest_version": 3,
-    "name": "ChatGPT Privacy Guard",
+    "name": "AI Privacy Guard",
     "version": "1.0.0",
-    "description": "Protects your privacy by blocking ChatGPT from silently sending what you type to its servers before you hit Enter.",
-    "permissions": ["declarativeNetRequest"],
-    "host_permissions": ["https://chatgpt.com/*"],
+  "description": "Automatically redacts sensitive prompt data across supported AI chat sites before it is sent.",
+    "permissions": ["declarativeNetRequest", "storage"],
+    "host_permissions": [
+      "https://chatgpt.com/*",
+      "https://claude.ai/*",
+      "https://chat.deepseek.com/*",
+      "https://gemini.google.com/*",
+      "https://chat.mistral.ai/*",
+      "https://lechat.mistral.ai/*"
+    ],
+    "action": {
+      "default_title": "AI Privacy Guard",
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://chatgpt.com/*",
+          "https://claude.ai/*",
+          "https://chat.deepseek.com/*",
+          "https://gemini.google.com/*",
+          "https://chat.mistral.ai/*",
+          "https://lechat.mistral.ai/*"
+        ],
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ],
     "declarative_net_request": {
       "rule_resources": [
         {

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Privacy Guard</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup-shell">
+      <header class="header">
+        <div>
+          <h1>AI Privacy Guard</h1>
+          <p>Automatic prompt redactions</p>
+        </div>
+        <strong id="totalCount" class="total">0</strong>
+      </header>
+
+      <section class="controls" aria-label="Protection controls">
+        <label class="toggle-row">
+          <input id="reviewBeforeSend" type="checkbox">
+          <span>Review before sending</span>
+        </label>
+
+        <button id="skipNextButton" class="primary-button" type="button">Skip next prompt</button>
+        <div id="skipStatus" class="status" role="status"></div>
+
+        <label class="field">
+          <span class="field-label">Allowed text</span>
+          <textarea id="allowedPhrases" rows="4" spellcheck="false" placeholder="One exact value per line"></textarea>
+        </label>
+        <button id="saveAllowedButton" class="secondary-button" type="button">Save allowed text</button>
+        <div class="hint">Inline: [[keep]]value[[/keep]]</div>
+      </section>
+
+      <section class="summary" aria-label="Replacement summary">
+        <div id="typeList" class="type-list"></div>
+      </section>
+
+      <section class="events" aria-label="Recent replacement log">
+        <div class="section-title">Recent logs</div>
+        <div id="eventList" class="event-list"></div>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
