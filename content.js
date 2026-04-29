@@ -100,13 +100,13 @@ const PATTERNS = [
     type: "credit_card_number",
     label: "Credit card numbers",
     replacement: "**** **** **** ****",
-    regex: /\b(?:4\d{3}|5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|3[47]\d{2}|6(?:011|5\d{2}))(?:[\s-]?\d{4}){2,3}\b/g
+    regex: /\b(?:4\d{3}(?:[\s-]?\d{4}){2}(?:[\s-]?\d{3})?|(?:5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|6(?:011|5\d{2}))(?:[\s-]?\d{4}){3}|3[47]\d{2}[\s-]?\d{6}[\s-]?\d{5})\b/g
   },
   {
     type: "credit_card_expiry",
     label: "Credit card expiry dates",
     replacement: "$1$2******$2",
-    regex: /(\b["']?(?:exp(?:iry|iration)?|card[_-]?exp(?:iry|iration)?|cc[_-]?exp(?:iry|iration)?)["']?\s*:\s*)(["'])(?!\*{6}\2)(?:0[1-9]|1[0-2])\s*\/\s*(?:\d{2}|\d{4})\2/gi
+    regex: /(\b["']?(?:exp(?:iry|iration)?|card[_-]?exp(?:iry|iration)?|cc[_-]?exp(?:iry|iration)?)["']?\s*:\s*)(["'])(?!\*{6}\2)(?:0[1-9]|1[0-2])(?:\s*\/\s*)?(?:\d{2}|\d{4})\2/gi
   },
   {
     type: "credit_card_cvv",
@@ -124,7 +124,7 @@ const PATTERNS = [
     type: "phone",
     label: "Phone numbers",
     replacement: "555-0100",
-    regex: /(?<!\w)(?=(?:[^\d]*\d){10,15}(?!\d))(?:\+?\d{1,3}[\s.-]?)?(?:\(?\d{1,4}\)?[\s.-]?){2,5}\d{2,4}(?!\w)/g
+    regex: /(?<!\w)(?:\+\d{1,3}(?:[\s.-]?\d{1,4}){4,6}|(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4})(?!\w)/g
   },
   {
     type: "address",
