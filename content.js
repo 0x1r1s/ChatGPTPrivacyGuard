@@ -150,7 +150,7 @@ const PATTERNS = [
     type: "personal_info",
     label: "Personal names",
     replacement: "$1$2******$2",
-    regex: /(\b["']?(?:first[_-]?name|last[_-]?name|full[_-]?name)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-ZÀ-ÖØ-öø-ÿ][A-ZÀ-ÖØ-öø-ÿ'. -]{1,80}\2/gi
+    regex: /(\b["']?(?:first[_-]?name|last[_-]?name|full[_-]?name)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ'. -]{1,80}\2/gi
   },
   {
     type: "personal_info",
@@ -162,13 +162,13 @@ const PATTERNS = [
     type: "personal_info",
     label: "Government identifiers",
     replacement: "$1$2******$2",
-    regex: /(\b["']?(?:national[_-]?id|passport(?:[_-]?number)?)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Z0-9][A-Z0-9 -]{5,40}\2/gi
+    regex: /(\b["']?(?:national[_-]?id|passport(?:[_-]?number)?)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Za-z0-9][A-Za-z0-9 -]{5,40}\2/gi
   },
   {
     type: "personal_info",
     label: "Address fields",
     replacement: "$1$2******$2",
-    regex: /(\b["']?(?:street|city|postal[_-]?code|zip(?:[_-]?code)?|country)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Z0-9À-ÖØ-öø-ÿ][A-Z0-9À-ÖØ-öø-ÿ'. -]{2,100}\2/gi
+    regex: /(\b["']?(?:street|city|postal[_-]?code|zip(?:[_-]?code)?|country)["']?\s*:\s*)(["'])(?!\*{6}\2)[A-Za-z0-9À-ÖØ-öø-ÿ][A-Za-z0-9À-ÖØ-öø-ÿ'. -]{2,100}\2/gi
   },
   {
     type: "credit_card_number",
