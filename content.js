@@ -173,7 +173,7 @@ const PATTERNS = [
   {
     type: "credit_card_number",
     label: "Credit card numbers",
-    replacement: (match) => isValidCreditCardNumber(match) ? "**** **** **** ****" : match,
+    replacement: (match) => isValidCreditCardNumber(match) ? match.replace(/\d/g, "*") : match,
     regex: /\b(?:4\d{3}(?:[\s-]?\d{4}){3}|(?:5[1-5]\d{2}|2(?:2[2-9]\d|[3-6]\d{2}|7[01]\d|720)|6(?:011|5\d{2}))(?:[\s-]?\d{4}){3}|3[47]\d{2}[\s-]?\d{6}[\s-]?\d{5})\b/g
   },
   {
