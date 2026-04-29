@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "AI Privacy Guard",
+    "name": "Big Language Model is watching you",
     "version": "1.1.0",
     "description": "Automatically redacts sensitive prompt data across supported AI chat sites before it is sent.",
     "icons": {
@@ -19,7 +19,7 @@
       "https://lechat.mistral.ai/*"
     ],
     "action": {
-      "default_title": "AI Privacy Guard",
+      "default_title": "Big Language Model is watching you",
       "default_icon": {
         "16": "icons/icon16.png",
         "32": "icons/icon32.png",
